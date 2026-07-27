@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Order Confirmation</title>
+</head>
+<body style="margin:0; padding:0; background:#f1f2f5; font-family: Arial, Helvetica, sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f1f2f5; padding:20px 0;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:12px; overflow:hidden;">
+
+         <tr>
+            <td style="background:#4F46E5; padding:13px 40px;">
+              <img width="50px" src="https://res.cloudinary.com/divytoolt/image/upload/v1785160663/logo-white_dg6yl3.png" alt="sly">
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:40px;">
+              <h1 style="margin:0 0 8px; font-size:22px; color:#14161e;">Order Confirmed 🎉</h1>
+              <p style="margin:0 0 24px; color:#4a4e5a; font-size:15px; line-height:1.6;">
+                Hi {{customerName}}, thanks for your order! We've received your payment and your order is being processed.
+              </p>
+
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+                <tr>
+                  <td style="padding:6px 0; color:#8a8f9c; font-size:13px;">Order ID</td>
+                  <td style="padding:6px 0; color:#14161e; font-size:13px; text-align:right;">{{orderId}}</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0; color:#8a8f9c; font-size:13px;">Date</td>
+                  <td style="padding:6px 0; color:#14161e; font-size:13px; text-align:right;">{{orderDate}}</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0; color:#8a8f9c; font-size:13px;">Shipping Address</td>
+                  <td style="padding:6px 0; color:#14161e; font-size:13px; text-align:right;">{{shippingAddress}}</td>
+                </tr>
+              </table>
+
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; margin-bottom:24px;">
+                <thead>
+                  <tr>
+                    <th align="left" style="padding:10px 0; border-bottom:1px solid #e4e6eb; color:#8a8f9c; font-size:12px; text-transform:uppercase; letter-spacing:0.04em; width: 70%;">Item</th>
+                    <th align="center" style="padding:10px 0; border-bottom:1px solid #e4e6eb; color:#8a8f9c; font-size:12px; text-transform:uppercase; letter-spacing:0.04em; width: 12%;">Qty</th>
+                    <th align="right" style="padding:10px 0; border-bottom:1px solid #e4e6eb; color:#8a8f9c; font-size:12px; text-transform:uppercase; letter-spacing:0.04em; width: 18%;">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- {{itemsRows}} <tr>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                  </tr> end repeat -->
+                </tbody>
+              </table>
+
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="right" style="padding:8px 0; color:#4a4e5a; font-size:14px;">Total Paid</td>
+                  <td align="right" style="padding:8px 0 8px 16px; color:#2f5fe0; font-size:20px; font-weight:bold; width:1%; white-space:nowrap;">₦{{totalAmount}}</td>
+                </tr>
+              </table>
+
+              <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:32px;">
+                <tr>
+                  <td style="border-radius:10px; background:#4F46E5;">
+                    <a href="{{ordersUrl}}" target="_blank" style="display:inline-block; padding:14px 28px; color:#ffffff; font-size:14px; font-weight:600; text-decoration:none;">
+                      View Your Order
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:24px 40px; background:#f8f9fb; border-top:1px solid #e4e6eb;">
+              <p style="margin:0; color:#8a8f9c; font-size:12px; line-height:1.6;">
+                If you have any questions about your order, just reply to this email.<br>
+                Sly · Ogbomoso, Nigeria
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

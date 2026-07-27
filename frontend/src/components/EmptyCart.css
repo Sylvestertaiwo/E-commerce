@@ -1,0 +1,130 @@
+.empty-cart {
+  --accent: #2563EB;
+  --accent-dim: rgba(37, 99, 235, 0.15);
+  --mist: #1E293B;
+  --ghost: #64748B;
+  min-height: 55vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.empty-cart-panel {
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+  padding: 48px 36px 40px;
+  border-radius: 24px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+ 
+.empty-cart-orbit {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 4px;
+}
+ 
+.empty-cart-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+ 
+.ring {
+  fill: none;
+  stroke: var(--accent-dim);
+  stroke-width: 1;
+  stroke-dasharray: 4 5;
+}
+ 
+ 
+.marker {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 6px var(--accent));
+}
+ 
+.dot {
+  fill: var(--ghost);
+  opacity: 0.55;
+}
+ 
+.empty-cart-status {
+  display: inline-block;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 4px;
+}
+ 
+.empty-cart-title {
+  margin: 14px 0 10px;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--mist);
+  letter-spacing: -0.01em;
+}
+ 
+.empty-cart-subtitle {
+  margin: 0 auto 28px;
+  max-width: 320px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ghost);
+}
+ 
+.empty-cart-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 24px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, var(--accent), #1E40AF);
+  color: rgb(233, 230, 230);
+  font-weight: 600;
+  font-size: 14.5px;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+  box-shadow: 0 8px 24px rgba(96, 165, 250, 0.25);
+}
+ 
+.empty-cart-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(96, 165, 250, 0.35);
+}
+ 
+.empty-cart-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+ .cart-icon{
+  transform: translateX(55px);
+ }
+@media (max-width: 480px) {
+  .empty-cart-panel {
+    padding: 36px 24px 32px;
+  }
+  .empty-cart-orbit {
+    width: 160px;
+    height: 160px;
+  }
+}
+ 
+@media (prefers-reduced-motion: reduce) {
+  .marker {
+    animation: none;
+  }
+  .marker animateMotion {
+    display: none;
+  }
+}

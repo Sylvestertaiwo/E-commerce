@@ -1,0 +1,189 @@
+:root{
+    --container-background: rgb(232, 232, 234);
+    --color-light: #666;
+    --color-accent: #4f46e5;
+    --color-lighter: #6b6b6b;
+}
+@keyframes floatRandom {
+    0%   { transform: translate(0, -1.6px) rotate(0deg); }
+    15%  { transform: translate(1px, 1px) rotate(2deg); }
+    30%  { transform: translate(-2px, 2px) rotate(-1deg); }
+    45%  { transform: translate(2px, -1px) rotate(1deg); }
+    60%  { transform: translate(-1px, -2px) rotate(-2deg); }
+    75%  { transform: translate(1px, 1px) rotate(1deg); }
+    90%  { transform: translate(-1px, 0px) rotate(-1deg); }
+    100% { transform: translate(0, -1.6px) rotate(0deg); }
+}
+
+.cardcard{
+    position: relative;
+    max-height: 30rem;
+    min-height: 26rem;
+    border-radius: 15px;
+    padding: 6px 10px;
+    padding-top: 10px;
+    transition: .3s ease;
+    border: 1px solid #ddd;
+    box-shadow: 0 3px 12px rgba(0,0,0,.06);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.cardcard:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0,0,0,.12);
+    cursor: pointer;
+}
+.cardcard:hover img{
+    transform: scale(1.05);
+}
+.cardcard:hover .cardcardHead{
+    color: #4f46e5;
+    text-shadow: #222;
+}
+.cardcard:hover .cardcardPrice{
+    color: #4139da;
+}
+.cardcard:hover .cardcardStar{
+    animation: floatRandom 20s ease-in-out infinite;
+}
+.cardcardImg{
+    min-height: 200px;
+    max-height: 200px;
+    border-radius: 12px 12px 5px 5px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .4s ease;
+}
+.productCardImg{
+    min-height: 200px;
+    max-height: 200px;
+    border-radius: 12px 12px 5px 5px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .4s ease;
+}
+.cardcardHead{
+    line-height: 26px;
+    font-size: 22px;
+    font-weight: 600;
+    padding-left: 10px;
+    color: #222;
+    transition: .3s ease;
+    text-decoration: none;
+    /* overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; */
+    margin-top: 8px;
+    margin-bottom: 2px;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.cardcardLink{
+    text-decoration: none;
+}
+.cardcardDesc{
+    margin-top: 8px;
+    margin-bottom: 0px;
+    bottom: 12px;
+    font-size: 15px;
+    padding-left: 10px;
+    font-weight: 600;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: #666;
+}
+.cardcardBtn{
+    width: 100%;
+    padding: 12px 30px;
+    background: var(--color-accent);
+    border: 1px solid var(--color-lighter);
+    border-radius: 12px;
+    margin-bottom: 5px;
+    color: white;
+    font-size: 16px;
+    transition: .25s ease;
+    cursor: pointer;
+}
+.cardcardBtn:hover{
+    background-color: #625af3;
+}
+.cardcardPrice{
+    color: #222;
+    padding-left: 10px;
+    margin-top: 15px;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--color-accent);
+}
+.cardcardReview{
+    font-size: 15.2px;
+    color: #3b3a3a;
+    color: white;
+}
+.cardcardRateNum{
+    color: #3b3a3a;
+    color: white;
+    font-size: 16px;
+}
+.cardcardStar{
+    font-size: 13px;
+    padding-left: 10px;
+    color: white;
+    display: inline-block;
+    transform: translateY(-1.6px);
+    transition: .3s ease;
+}
+.cardcardRating{
+    position: absolute;
+    right: 18px;
+    top: 20px;
+    color: white;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    border-radius: 999px;
+    padding: 5px 8px;
+    transition: 0.3s ease;
+}
+.cardcardRating:hover{
+    transform: scale(1.02, 1.01);
+}
+.productcard .cardcard{
+        min-height: 27.8rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+@media (max-width: 480px) {
+    .cardcardHead{
+    line-height: 24px;
+    font-size: 21px;
+    font-weight: 600;
+    }
+    .cardcardDesc{
+    font-size: 14.5px;
+    }
+    .cardcardPrice{
+    margin-top: 10px;
+    font-size: 17px;
+    }
+    .productCardImg{
+        min-height: 120px;
+        max-height: 120px;
+    }
+    .productcard .cardcard{
+        min-height: 22rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}

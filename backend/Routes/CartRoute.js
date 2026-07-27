@@ -1,0 +1,13 @@
+const express = require("express")
+const { addtoCart, getCart, updateQuantity, removeFromCart, getOrder, confirmPayment, getOrders, getCount } = require("../Controllers/CartController")
+const { requireAuth } = require("../Controllers/AuthController")
+const router = express.Router()
+router.post("/checkout", requireAuth, getOrder)
+router.post("/",requireAuth, addtoCart)
+router.get("/",requireAuth, getCart)
+router.get("/count",requireAuth, getCount)
+router.get("/orders", requireAuth, getOrders)
+router.get("/verify/:reference", confirmPayment)
+router.patch("/:id", requireAuth, updateQuantity)
+router.delete("/:id", requireAuth, removeFromCart)
+module.exports = router
