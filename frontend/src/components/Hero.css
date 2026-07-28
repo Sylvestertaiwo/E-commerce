@@ -314,7 +314,7 @@
     pointer-events: none;
 }
 .hero-container{
-    padding: 0 30px;
+    padding: 0 50px;
     padding-top: 100px;
     min-height: 92dvh; 
     grid-template-rows: auto auto;
