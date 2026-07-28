@@ -7,9 +7,11 @@ const crypto = require("crypto");
 const Order = require('../Models/Order.js');
 const fs = require("fs");
 const nodemailer = require('nodemailer');
+const { Resend } = require("resend")
 const path = require("path")
 const frontendUrl = process.env.FRONT_END_URL
- 
+const resend = new Resend(process.env.RESEND_API_KEY); 
+
 const getCart = async (req, res)=>{
     try{
         const cartItem = await Cart.find({user: req.userId}).populate("product")
@@ -167,29 +169,23 @@ try{
     console.log("[confirmPayment] Step 9: EMAIL env set? =", !!process.env.EMAIL, "EMAIL_PASSWORD env set? =", !!process.env.EMAIL_PASSWORD);
  
     try {
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL,
-                pass: process.env.EMAIL_PASSWORD,
-            },
-        });
-        console.log("[confirmPayment] Step 10: transporter created, verifying...");
- 
-        await transporter.verify();
-        console.log("[confirmPayment] Step 11: transporter verified OK, sending mail to", updatedOrder.user.email);
- 
-        const info = await transporter.sendMail({
-            from: `Sly <${process.env.EMAIL}>`,
-            to: updatedOrder.user.email,
-            subject: `Order Confirmed — ${updatedOrder._id}`,
-            html: emailHtml,
-        });
-        console.log("[confirmPayment] Step 12: mail sent! messageId =", info.messageId, "response =", info.response);
-        
+    console.log("[confirmPayment] Step 10: sending via Resend to", updatedOrder.user.email);
+
+    const { data, error } = await resend.emails.send({
+        from: 'Sly <onboarding@resend.dev>', // temporary sender, see note below
+        to: updatedOrder.user.email,
+        subject: `Order Confirmed — ${updatedOrder._id}`,
+        html: emailHtml,
+    });
+
+    if (error) {
+        console.error("[confirmPayment] EMAIL SEND FAILED:", error);
+    } else {
+        console.log("[confirmPayment] Step 11: mail sent! id =", data.id);
+    }
+
     } catch (emailErr) {
-        console.error("[confirmPayment] EMAIL SEND FAILED:", emailErr.message);
-        console.error("[confirmPayment] EMAIL SEND FAILED full error:", JSON.stringify(emailErr, Object.getOwnPropertyNames(emailErr)));
+        console.error("[confirmPayment] EMAIL SEND FAILED (exception):", emailErr.message);
     }
     return res.json({status: true, message: "transaction successfull"})
 }else{
