@@ -7,6 +7,7 @@ const crypto = require("crypto");
 const Order = require('../Models/Order.js');
 const fs = require("fs");
 const nodemailer = require('nodemailer');
+const path = require("path")
 const frontendUrl = process.env.FRONT_END_URL
 
 const getCart = async (req, res)=>{
@@ -142,7 +143,7 @@ try{
         </tr>
         `).join('');
 
-    let emailHtml = fs.readFileSync('./order-confirmation-email.html', 'utf-8');
+    let emailHtml = fs.readFileSync(path.join(__dirname, '../order-confirmation-email.html'), 'utf-8');
     emailHtml = emailHtml
         .replace('{{customerName}}', updatedOrder.user.firstname)
         .replace('{{orderId}}', updatedOrder._id)
