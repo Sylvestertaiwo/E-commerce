@@ -22,7 +22,7 @@ app.use(cors({
 }));
 require('dotenv').config({path: '../.env'});
 const MongoDB_URI = process.env.MONGO_DB_URI
-const Port = process.env.PORT
+const Port = process.env.PORT || 4000
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 mongoose.connect(MongoDB_URI)
