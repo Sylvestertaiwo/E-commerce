@@ -9,7 +9,7 @@ const fs = require("fs");
 const nodemailer = require('nodemailer');
 const path = require("path")
 const frontendUrl = process.env.FRONT_END_URL
-
+ 
 const getCart = async (req, res)=>{
     try{
         const cartItem = await Cart.find({user: req.userId}).populate("product")
@@ -22,7 +22,7 @@ const getCart = async (req, res)=>{
             });
         }
         let totalAmount = 0;
-
+ 
         cartItem.forEach((c) => {
             totalAmount += c.product.retailPrice * c.quantity;
         });
@@ -67,7 +67,7 @@ const  removeFromCart = async(req,res)=>{
     }catch(err){
         return res.status(500).json({status:false, message: "unable to delete item"});
     }
-
+ 
 }
 const getOrder = async (req,res)=>{
   try{
@@ -89,7 +89,7 @@ const getOrder = async (req,res)=>{
       });
       
     const reference = crypto.randomBytes(12).toString('hex');
-
+ 
     const newOrder = await Order.create({
       user: req.userId,
       items: orderItems,
@@ -120,10 +120,11 @@ const getOrder = async (req,res)=>{
 const confirmPayment = async (req, res)=>{
 try{
     const {reference}= req.params;
-
+    console.log("[confirmPayment] Step 1: reference =", reference);
+ 
     const paystackref = await axios.get(`https://api.paystack.co/transaction/verify/${reference}`,{ headers:  {Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`}})
-    // console.log("Step 2: Paystack responded:", paystackref.data);
-
+    console.log("[confirmPayment] Step 2: Paystack status =", paystackref.data.data.status);
+ 
     if(paystackref.data.data.status === "failed" || paystackref.data.data.status === "abandoned" ){
         await Order.findOneAndUpdate({paystackRef: reference}, {paymentStatus: "failed"}, {new: true})
         return res.status(500).json({status: false, message: "transaction failed"})
@@ -131,10 +132,13 @@ try{
         await Order.findOneAndUpdate({paystackRef: reference}, {paymentStatus: "pending"}, {new: true})
         return res.status(501).json({status: false, message: "transaction pending"})
     }else if(paystackref.data.data.status === "success"){
-
+ 
     const updatedOrder = await Order.findOneAndUpdate({paystackRef: reference}, {paymentStatus: "paid"}, {new:true}).populate('items.product').populate('user');
+    console.log("[confirmPayment] Step 3: order updated, user email =", updatedOrder?.user?.email);
+ 
     await Cart.deleteMany({user: updatedOrder.user._id})
-
+    console.log("[confirmPayment] Step 4: cart cleared");
+ 
     const itemsRows = updatedOrder.items.map(item => `
         <tr>
             <td style="padding:12px 0; border-bottom:1px solid #f1f2f5; color:#14161e; font-size:14px;">${item.product.name}</td>
@@ -142,8 +146,14 @@ try{
             <td align="right" style="padding:12px 0; border-bottom:1px solid #f1f2f5; color:#14161e; font-size:14px;">₦${item.price.toLocaleString()}</td>
         </tr>
         `).join('');
-
-    let emailHtml = fs.readFileSync(path.join(__dirname, '../order-confirmation-email.html'), 'utf-8');
+    console.log("[confirmPayment] Step 5: itemsRows built, length =", itemsRows.length);
+ 
+    const templatePath = path.join(__dirname, '../order-confirmation-email.html');
+    console.log("[confirmPayment] Step 6: reading template from =", templatePath, "exists =", fs.existsSync(templatePath));
+ 
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    console.log("[confirmPayment] Step 7: template read OK, length =", emailHtml.length);
+ 
     emailHtml = emailHtml
         .replace('{{customerName}}', updatedOrder.user.firstname)
         .replace('{{orderId}}', updatedOrder._id)
@@ -152,7 +162,10 @@ try{
         .replace(/<!-- \{\{itemsRows\}\}[\s\S]*?end repeat -->/, itemsRows)
         .replace('{{totalAmount}}', updatedOrder.totalAmount.toLocaleString())
         .replace('{{ordersUrl}}', `${frontendUrl}/orders`);
-
+    console.log("[confirmPayment] Step 8: emailHtml built, contains {{ still? =", emailHtml.includes('{{'));
+ 
+    console.log("[confirmPayment] Step 9: EMAIL env set? =", !!process.env.EMAIL, "EMAIL_PASSWORD env set? =", !!process.env.EMAIL_PASSWORD);
+ 
     try {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -161,16 +174,22 @@ try{
                 pass: process.env.EMAIL_PASSWORD,
             },
         });
-
-        await transporter.sendMail({
+        console.log("[confirmPayment] Step 10: transporter created, verifying...");
+ 
+        await transporter.verify();
+        console.log("[confirmPayment] Step 11: transporter verified OK, sending mail to", updatedOrder.user.email);
+ 
+        const info = await transporter.sendMail({
             from: `Sly <${process.env.EMAIL}>`,
             to: updatedOrder.user.email,
             subject: `Order Confirmed — ${updatedOrder._id}`,
             html: emailHtml,
         });
+        console.log("[confirmPayment] Step 12: mail sent! messageId =", info.messageId, "response =", info.response);
         
     } catch (emailErr) {
-        console.error("Email failed to send, but payment succeeded:", emailErr.message);
+        console.error("[confirmPayment] EMAIL SEND FAILED:", emailErr.message);
+        console.error("[confirmPayment] EMAIL SEND FAILED full error:", JSON.stringify(emailErr, Object.getOwnPropertyNames(emailErr)));
     }
     return res.json({status: true, message: "transaction successfull"})
 }else{
@@ -178,7 +197,8 @@ try{
         return res.status(202).json({status: false, message: `Payment status: ${paystackref.data.data.status}. Please check back shortly.`})
     }
 }catch(err){
-    console.log("Step ERROR:", err.message);
+    console.log("[confirmPayment] OUTER CATCH - Step ERROR:", err.message);
+    console.log("[confirmPayment] OUTER CATCH - full stack:", err.stack);
     res.status(500).json({status: false, message : "unable to verify payment, transaction failed!"})
 }
 }
@@ -187,7 +207,7 @@ const getOrders = async (req, res) => {
     const orders = await Order.find({ user: req.userId })
       .populate('items.product')
       .sort({ createdAt: -1 });
-
+ 
     return res.json({ status: true, orders });
   } catch (err) {
     console.error("Unable to fetch orders:", err.message);
