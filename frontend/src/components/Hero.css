@@ -328,7 +328,7 @@
     display: none;
   }
   .buttom-disp{
-    padding: 10px 20px;
+    padding: 15px 20px;
     gap: 10px;
   }
   .buttom-disp-right{
@@ -347,7 +347,7 @@
     min-height: 90dvh; 
     grid-template-rows: auto auto;
     padding-bottom: 10vh;
-    gap: 18px;
+    gap: 6px;
 }
 }
  

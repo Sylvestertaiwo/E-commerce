@@ -1,6 +1,8 @@
 *{
   box-sizing: border-box; 
   -webkit-tap-highlight-color: transparent;
+  margin: 0;
+  padding: 0;
 }
 
 body{
@@ -10,10 +12,18 @@ body{
   background: #E2E8F0;
   font-family: 'Inter', sans-serif; 
   line-height: 24px;
-  width: 100vw;
-  min-width: 100vw;
+  width: 100%;
+  min-width: 100%;
   background-clip: no-clip;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+}
+html{
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
