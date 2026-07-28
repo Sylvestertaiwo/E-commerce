@@ -316,10 +316,10 @@
 .hero-container{
     padding: 0 50px;
     padding-top: 100px;
-    min-height: 92dvh; 
+    min-height: 105dvh; 
     grid-template-rows: auto auto;
     padding-bottom: 10vh;
-    gap: 18px;
+    gap: 4px;
 }
   
 }
