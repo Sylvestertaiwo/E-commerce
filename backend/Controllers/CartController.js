@@ -103,7 +103,7 @@ const getOrder = async (req,res)=>{
         email: user.email,
         amount: totalAmount * 100,
         reference: reference,
-        callback_url: "http://localhost:5173/verify"
+        callback_url: `${frontendUrl}/verify`
       },
       {
         headers: { Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}` }
