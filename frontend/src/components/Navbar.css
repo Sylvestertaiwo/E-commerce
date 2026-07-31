@@ -515,10 +515,9 @@
   .suggestionDrop{
     position: fixed;
     top: 58px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100vw - 40px);
-    min-width: unset;
+    left: 0%;
+    width: calc(100vw - 35px);
+    min-width: 320px;
     max-width: none;
     margin-top: 0;
     margin-right: 200px;
@@ -527,7 +526,7 @@
     width: 100%;
   }
   .suggestionList{
-    width: 98%;
+    width: 102%;
   }
   .suggestionContainer{
     width: 100%;
@@ -546,7 +545,7 @@
   transform: scale(2.1, 1.5);
 }
 }
-@media (min-width: 480px) and (max-width: 550px) {
+@media (min-width: 481px) and (max-width: 550px) {
   .suggestionDrop{
     left: -100%;
     width: 100%;

@@ -194,7 +194,8 @@ function Navbar({}) {
   return (
   <>
       <nav className="navbar">
-        <div className="navbar-logo">
+       <Link to="/">
+       <div className="navbar-logo">
           <svg className='navbarslyIcon' width="32" height="24" viewBox="0 0 729 779" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M60.5 360L403 0L267 268L417.5 251.5L72 654.5L228.5 333.5L60.5 360Z" fill="url(#paint0_linear_2_7)"/>
       <path d="M149.5 663.5L465.5 254L331.5 568L492.5 602L149.5 663.5Z" fill="url(#paint1_linear_2_7)"/>
@@ -227,7 +228,10 @@ function Navbar({}) {
       </linearGradient>
       </defs>
 </svg>
-        </div>
+       </div>
+       </Link> 
+        
+        
         <div className="navbar-links">
             <Link to="/" className="navbar-link">Home</Link>
             <Link to="/shop" className="navbar-link">Shop</Link>

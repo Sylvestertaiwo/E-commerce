@@ -47,10 +47,10 @@ export default function About() {
       <section className="about-overview">
         <p>
           Real product data, real Paystack payments, real emails when an order
-          goes through. Complete checkout flow.
+          goes through. Complete checkout flow. Nodemailer stopped working after deployment so I migrated to resend
         </p>
         <div className="about-stack">
-          {['React (Vite)', 'Swiper', 'Express.js', 'MongoDB', 'bcrypt', 'Paystack', 'Nodemailer', 'JWT'].map((t) => (
+          {['React (Vite)', 'Swiper', 'Express.js', 'MongoDB', 'bcrypt', 'Paystack', 'Nodemailer', 'Resend', 'JWT'].map((t) => (
             <span className="about-pill" key={t}>{t}</span>
           ))}
         </div>

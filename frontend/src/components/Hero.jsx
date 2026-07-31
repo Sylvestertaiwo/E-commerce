@@ -58,8 +58,6 @@ const Hero = () => {
         getCategories()
     }, [])
         
-      
-    
   return (
     <>
     <Navbar/>
@@ -74,7 +72,7 @@ const Hero = () => {
                     <img src={headphone} alt="item" className='headphone-img'/>
             </div>
             <div className='hero-right'>
-                <div className='right-disp'>
+                <div className='right-disp' onClick={()=>navigate("/category/electronics")}>
                     <div className='upper-text'>SHOP</div>
                     <div>
                         <div className='hero-side-text'>Electronics</div>
@@ -82,7 +80,7 @@ const Hero = () => {
                     </div>
                     
                 </div>
-                <div className='right-disp'>
+                <div className='right-disp' onClick={()=>navigate("/category/Jewelry")}>
                     <div className='upper-text'>SHOP</div>
                     <div>
                         <div className='hero-side-text'>Jewellery</div>
@@ -93,7 +91,7 @@ const Hero = () => {
             </div>
         </div>
         <div className='hero-buttom'>
-            <div className='buttom-disp'>
+            <div className='buttom-disp' onClick={()=>navigate("/shop")}>
                 <div>
                     <svg className='buttom-hero-svg' width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M3 8L12 3L21 8V16L12 21L3 16V8Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
@@ -107,7 +105,7 @@ const Hero = () => {
                 </div>
                 
             </div>
-            <div className='buttom-disp'>
+            <div className='buttom-disp' onClick={()=>navigate("/categories")}>
                 <div>
                     <svg className='buttom-hero-svg' width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <rect x="3" y="3" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.8"/>
@@ -117,7 +115,7 @@ const Hero = () => {
                     </svg>
                 </div>
                 <div>
-                    <div className='buttom-hero-main'>15+</div>
+                    <div className='buttom-hero-main'>25+</div>
                     <div className='hero-mini-text'>Categories</div>
                 </div>
                 
