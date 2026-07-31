@@ -84,7 +84,6 @@ function Navbar({}) {
   const handleChange = (e) => {
     const value = e.target.value;
     setQuery(value);
-    if (onSearch) onSearch(value);
   };
 
  const toggleListDrop = ()=> setlistDrop(!listDrop)
