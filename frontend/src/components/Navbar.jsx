@@ -27,6 +27,9 @@ function Navbar({}) {
   const [hamburgerDrop, setHamburgerDrop] = useState(false)
   const [activeList, setActiveList] = useState(false)
   const {cartCount} = useCart()
+  const navbarRef = useRef(null)
+  const [navbarPosition, setNavbarPosition] = useState({width: 0, left: 0})
+  const searchRef = useRef(null)
   const Server_Url = import.meta.env.VITE_SERVER_URL
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current)
@@ -190,9 +193,35 @@ function Navbar({}) {
       navigate(`/search?search=${encodeURIComponent(query.trim())}`)
     }
   }
+
+  useEffect(() => {
+    function updateNavbar(){
+      if(navbarRef.current && searchRef.current){
+        const rect = navbarRef.current.getBoundingClientRect();
+        const searchRect = searchRef.current.getBoundingClientRect();
+        setNavbarPosition({
+          left: rect.left - searchRect.left,
+          width: rect.width
+        })
+      }
+    }
+
+    const rafId = requestAnimationFrame(updateNavbar);
+
+    const observer = new ResizeObserver(updateNavbar);
+    if (navbarRef.current) observer.observe(navbarRef.current);
+    window.addEventListener("resize", updateNavbar);
+    return () => {
+      cancelAnimationFrame(rafId);
+      observer.disconnect();
+      window.removeEventListener("resize", updateNavbar)
+    }
+  }, [])
+  
+
   return (
   <>
-      <nav className="navbar">
+      <nav ref={navbarRef} className="navbar">
        <Link to="/">
        <div className="navbar-logo">
           <svg className='navbarslyIcon' width="32" height="24" viewBox="0 0 729 779" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -258,7 +287,7 @@ function Navbar({}) {
         </div>
 
         <div className="navbar-actions">
-          <div style={{position: "relative"}}>
+          <div style={{position: "relative"}} ref={searchRef}>
           <div
             className={`navbar-search-wrap ${expanded ? 'expanded' : ''}`}
             onMouseEnter={openSearch}
@@ -283,7 +312,14 @@ function Navbar({}) {
             />
             <div>
               {
-                query.trim().length >= 2 && (<div onMouseLeave={()=>setUnblurSuggestion(false)} onMouseEnter={()=>setUnblurSuggestion(true)} className={expanded ? "suggestionDrop" : "no-drop"}>{dropdownContent}</div>)
+                query.trim().length >= 2 && (
+                <div 
+                style={{"--navbar-left" : `${navbarPosition.left}px`, '--navbar-width' : `${navbarPosition.width}px`}} 
+                onMouseLeave={()=>setUnblurSuggestion(false)} 
+                onMouseEnter={()=>setUnblurSuggestion(true)} 
+                className={expanded ? "suggestionDrop" : "no-drop"}>{dropdownContent}
+                </div>
+              )
               }
             </div>
           </div>
